@@ -38,6 +38,21 @@ title: "CS 203: Software Tools and Techniques for AI"
 
 ---
 
+## Week 3: LLM APIs & Multimodal AI
+
+**Topics**: Gemini API, text generation, vision models, multimodal understanding
+
+### Lecture (1.5 hours)
+- [PDF](week3-lecture.pdf) | [HTML](week3-lecture.html) | [Source](https://github.com/nipunbatra/stt-ai-teaching/blob/master/week3-lecture.md)
+- Content: LLM API setup, text understanding (NER, sentiment, QA), vision (OCR, object detection), audio/video processing
+
+### Lab (3 hours)
+- [PDF](week3-lab.pdf) | [HTML](week3-lab.html) | [Source](https://github.com/nipunbatra/stt-ai-teaching/blob/master/week3-lab.md)
+- Exercises: API setup, sentiment analysis, image analysis, OCR, PDF extraction, audio transcription
+- Based on: [Gemini API Tutorial](https://nipunbatra.github.io/blog/posts/2025-12-01-gemini-api-multimodal.html)
+
+---
+
 ## Reference Materials
 
 ### Data Collection and Labeling (Full Course Content)
