@@ -68,18 +68,18 @@ title: "CS 203: Software Tools and Techniques for AI"
 
 ---
 
-## Week 5: Git & API Integration
+## Week 5: Git & GitHub Automation
 
-**Topics**: Git fundamentals, collaboration, external API calls, LLM API integration
+**Topics**: GitHub API, PyGithub, GraphQL, Webhooks, AI-powered Code Review
 
 ### Lecture (1.5 hours)
-- [PDF](pdf/git-integration-lecture.pdf) | [HTML](html/git-integration-lecture.html) | [Source](https://github.com/nipunbatra/stt-ai-teaching/blob/master/slides/git-integration-lecture.md)
-- Content: Version control with Git, branching/merging, GitHub collaboration, calling APIs with requests/httpx, integrating Gemini API with FastAPI
+- [PDF](pdf/github-automation-lecture.pdf) | [HTML](html/github-automation-lecture.html) | [Source](https://github.com/nipunbatra/stt-ai-teaching/blob/master/slides/github-automation-lecture.md)
+- Content: REST vs GraphQL APIs, Authentication (PATs), PyGithub, Webhooks, Building AI bots for GitHub
 
 ### Lab (3 hours)
-- [PDF](pdf/git-integration-lab.pdf) | [HTML](html/git-integration-lab.html) | [Source](https://github.com/nipunbatra/stt-ai-teaching/blob/master/slides/git-integration-lab.md)
-- Exercises: Git workflow, branching/merging, external API calls, async requests
-- Project: Build complete Text Tools API (sentiment, summarization, translation, QA)
+- [PDF](pdf/github-automation-lab.pdf) | [HTML](html/github-automation-lab.html) | [Source](https://github.com/nipunbatra/stt-ai-teaching/blob/master/slides/github-automation-lab.md)
+- Exercises: Programmatic repo management, fetching PR diffs, building an LLM-based PR Reviewer bot
+- Project: Build a complete CI/CD automation script using Python and Gemini
 
 ---
 
