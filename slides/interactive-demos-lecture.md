@@ -2,6 +2,7 @@
 marp: true
 theme: default
 paginate: true
+math: mathjax
 style: |
   section { background: white; font-family: 'Inter', sans-serif; font-size: 28px; }
   h1 { color: #1e293b; border-bottom: 3px solid #f59e0b; font-size: 1.6em; margin-bottom: 0.5em; }
@@ -216,6 +217,148 @@ with gr.Blocks() as demo:
 
 ---
 
+# Understanding Reactive Programming
+
+**Traditional Web Apps**:
+```
+User clicks → Event listener fires → Update specific DOM element
+```
+
+**Streamlit/Gradio Paradigm**:
+```
+User interacts → Re-run entire script → Framework diffs and updates UI
+```
+
+**Why this matters**:
+- No manual DOM manipulation
+- State persists via `st.session_state` (Streamlit) or component state (Gradio)
+- Pure Python - no JavaScript required
+
+---
+
+# The Streamlit Execution Model
+
+**On every interaction** (button click, slider change, text input):
+
+1. **Script runs from top to bottom**
+2. **Variables reset** (unless in `st.session_state`)
+3. **Framework computes diff** between old and new UI
+4. **Only changed elements re-render** in browser
+
+**Example**:
+```python
+import streamlit as st
+
+counter = 0  # ❌ Always 0 on rerun
+
+if st.button("Increment"):
+    counter += 1  # ❌ Won't persist
+
+st.write(counter)  # Always shows 0
+```
+
+**Fix**: Use session state
+```python
+if 'counter' not in st.session_state:
+    st.session_state.counter = 0
+
+if st.button("Increment"):
+    st.session_state.counter += 1  # ✅ Persists
+
+st.write(st.session_state.counter)  # Shows actual count
+```
+
+---
+
+# State Management Patterns
+
+**Pattern 1: Initialize on First Run**
+```python
+if 'model' not in st.session_state:
+    st.session_state.model = load_expensive_model()
+```
+
+**Pattern 2: Form State**
+```python
+with st.form("my_form"):
+    name = st.text_input("Name")
+    age = st.slider("Age", 0, 100)
+    submitted = st.form_submit_button("Submit")
+
+    if submitted:
+        st.session_state.user_data = {"name": name, "age": age}
+```
+
+**Pattern 3: Callback Functions**
+```python
+def on_slider_change():
+    st.session_state.slider_moved = True
+
+st.slider("Value", 0, 100, key="value", on_change=on_slider_change)
+```
+
+---
+
+# Handling Long-Running Tasks
+
+**Problem**: Model inference takes 5 seconds. UI freezes.
+
+**Solution 1: Spinners**
+```python
+with st.spinner("Generating..."):
+    result = slow_model(input_text)
+st.success("Done!")
+st.write(result)
+```
+
+**Solution 2: Progress Bars**
+```python
+progress_bar = st.progress(0)
+for i in range(100):
+    process_chunk(i)
+    progress_bar.progress(i + 1)
+```
+
+**Solution 3: Status Updates**
+```python
+with st.status("Downloading data...") as status:
+    download_data()
+    status.update(label="Processing...", state="running")
+    process_data()
+    status.update(label="Complete!", state="complete")
+```
+
+---
+
+# Error Handling Best Practices
+
+**Don't show stack traces to users**:
+```python
+# ❌ Bad
+result = model.predict(user_input)  # Crashes with ugly error
+
+# ✅ Good
+try:
+    result = model.predict(user_input)
+except Exception as e:
+    st.error(f"Prediction failed: {str(e)}")
+    st.stop()  # Halt execution gracefully
+```
+
+**Validate inputs**:
+```python
+uploaded_file = st.file_uploader("Upload Image", type=['png', 'jpg'])
+
+if uploaded_file is not None:
+    if uploaded_file.size > 5_000_000:  # 5MB
+        st.error("File too large. Max 5MB.")
+    else:
+        image = Image.open(uploaded_file)
+        # process image
+```
+
+---
+
 # Comparison: Streamlit vs Gradio
 
 | Feature | Streamlit | Gradio |
@@ -225,6 +368,7 @@ with gr.Blocks() as demo:
 | **Customization** | Moderate (CSS hacks) | Moderate (Themes) |
 | **State** | Session State (Explicit) | State component (Implicit) |
 | **Hosting** | Streamlit Cloud | Hugging Face Spaces |
+| **Execution Model** | Full script rerun | Function-level reruns |
 
 **Rule of Thumb**:
 - Need a full dashboard/app? **Streamlit**
@@ -251,6 +395,67 @@ git push
 **Streamlit Cloud**:
 - Connects to GitHub repo
 - Automatic redeploy on push
+
+**Requirements File** (critical!):
+```txt
+streamlit==1.29.0
+transformers==4.36.0
+torch==2.1.0
+```
+
+---
+
+# Deployment Checklist
+
+**Before Deployment**:
+1. ✅ Test locally with `streamlit run app.py`
+2. ✅ Create `requirements.txt` with pinned versions
+3. ✅ Add `.gitignore` for large files/secrets
+4. ✅ Use environment variables for API keys (not hardcoded!)
+5. ✅ Add loading states and error handling
+6. ✅ Test with slow internet (users have varying speeds)
+
+**Environment Variables** (Streamlit):
+```python
+import os
+api_key = os.getenv("GEMINI_API_KEY")  # Set in Streamlit Cloud settings
+```
+
+**Secrets** (Streamlit Cloud):
+```toml
+# .streamlit/secrets.toml (local only, not committed)
+GEMINI_API_KEY = "your-key-here"
+
+# Access in code:
+import streamlit as st
+api_key = st.secrets["GEMINI_API_KEY"]
+```
+
+---
+
+# Multi-Page Apps (Streamlit)
+
+**Structure**:
+```
+my_app/
+├── Home.py           # Main page (name matters!)
+├── pages/
+│   ├── 1_📊_Data.py
+│   ├── 2_🤖_Model.py
+│   └── 3_📈_Results.py
+└── requirements.txt
+```
+
+**Navigation** is automatic! Streamlit detects files in `pages/`.
+
+**Sharing state across pages**:
+```python
+# In Home.py
+st.session_state.user_name = "Alice"
+
+# In pages/1_📊_Data.py
+st.write(f"Welcome, {st.session_state.user_name}")
+```
 
 ---
 
@@ -301,20 +506,26 @@ if prompt := st.chat_input("Say something..."):
 
 ---
 
-# Lab: Build a GenAI App
+# Lab Preview: Multiple Apps
 
-**Task**: Build a "YouTube Video Summarizer"
+**You will build THREE apps** to master Streamlit:
 
-**Requirements**:
-1.  **Input**: YouTube URL.
-2.  **Processing**:
-    - Extract transcript (using `youtube-transcript-api`).
-    - Summarize using Gemini/OpenAI API.
-3.  **UI**:
-    - Streamlit or Gradio.
-    - Show video thumbnail.
-    - Display summary.
-    - Allow "Chat with video" follow-up questions.
+1.  **Sentiment Analysis Dashboard**
+    - Text input → real-time sentiment prediction
+    - Confidence visualization
+    - History tracking with session state
+
+2.  **Image Classification App**
+    - Upload images → classification results
+    - Multiple model selection
+    - Batch processing
+
+3.  **YouTube Video Summarizer**
+    - URL input → transcript extraction → AI summary
+    - Chat interface for follow-up questions
+    - Deploy to Streamlit Cloud
+
+**See lab for detailed step-by-step instructions!**
 
 ---
 
