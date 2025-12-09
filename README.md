@@ -1,147 +1,82 @@
 # CS 203: Software Tools and Techniques for AI
 
-Course materials for CS 203 at IIT Gandhinagar.
+**Instructor:** Prof. Nipun Batra, IIT Gandhinagar  
+**Course Website:** [nipunbatra.github.io/stt-ai-26](https://nipunbatra.github.io/stt-ai-26/)  
+**Slides & Labs:** [nipunbatra.github.io/stt-ai-teaching](https://nipunbatra.github.io/stt-ai-teaching/)
 
-**Course website:** https://nipunbatra.github.io/stt-ai-26/
+This repository contains the lecture slides, lab exercises, and course materials for CS 203. The course covers the end-to-end software engineering stack required for modern AI development, from data collection to deployment and monitoring.
 
-**Slides (GitHub Pages):** https://nipunbatra.github.io/stt-ai-teaching/
+## Course Syllabus (15 Weeks)
 
-## Slides
+| Week | Topic | Key Tools |
+| :--- | :--- | :--- |
+| 1 | Web Scraping & Data Collection | Chrome DevTools, Playwright, BeautifulSoup |
+| 2 | Data Validation & Labeling | Pydantic, jq, Label Studio |
+| 3 | LLM APIs & Multimodal AI | Gemini API, OpenAI API |
+| 4 | HTTP, APIs & FastAPI | curl, HTTP, FastAPI |
+| 5 | Git & API Integration | Git, GitHub, Requests |
+| 6 | Active Learning | modAL, Uncertainty Sampling |
+| 7 | Data Augmentation | Albumentations, nlpaug |
+| 8 | Reproducibility & Environments | Docker, DVC, MLflow |
+| 9 | Testing & CI/CD | pytest, GitHub Actions |
+| 10 | Model Deployment | ONNX, Docker, Serving |
+| 11 | Interactive AI Demos | Streamlit, Gradio |
+| 12 | RAG & Vector Databases | ChromaDB, Embeddings, LangChain |
+| 13 | Cloud Orchestration | Docker Compose, AWS/Render |
+| 14 | Model Monitoring | Evidently AI, Data Drift |
+| 15 | LLM Agents | LangGraph, Tool Use |
 
-### Data Collection and Labeling
+## Building the Slides
 
-Comprehensive slides covering:
-- Data Collection (instrumentation, analytics, logging, scraping, streaming)
-- Data Validation (Pydantic, Great Expectations, Pandera, quality monitoring)
-- Data Labeling (Label Studio, inter-annotator agreement, active learning, weak supervision)
-- Data Augmentation (image, text, audio, time series, SMOTE, generative models)
-
-**Files:**
-- Source: `data-collection-labeling.typ`
-- Theme: `slides.typ`
-- PDF: `data-collection-labeling.pdf`
-
-## Building Slides
+The slides are written in Markdown using [Marp](https://marp.app/).
 
 ### Prerequisites
 
-Install Typst: https://github.com/typst/typst#installation
+1.  **Node.js**: Install Node.js.
+2.  **Marp CLI**: Install globally via npm:
+    ```bash
+    npm install -g @marp-team/marp-cli
+    ```
+
+### Build Commands
+
+We use a `Makefile` to automate the build process.
 
 ```bash
-# macOS
-brew install typst
-
-# Linux
-cargo install --git https://github.com/typst/typst typst-cli
-
-# Or download binary from releases
-```
-
-### Using Makefile (Recommended)
-
-```bash
-# Build light theme PDFs (white background, default)
-make light
-
-# Build dark theme PDFs (inverted colors)
-make dark
-
-# Build both themes
-make both
-
-# List available slides
-make list
+# Build all slides (PDF and HTML)
+make all
 
 # Clean generated files
 make clean
+
+# List available slides
+make list
 ```
 
-### Manual Build
+Outputs are generated in:
+- `pdf/`: PDF versions of slides (for printing/downloading)
+- `html/`: HTML versions of slides (for presenting)
 
-**Compile Typst to PDF:**
-```bash
-typst compile data-collection-labeling.typ data-collection-labeling-light.pdf
+## Directory Structure
+
+```
+.
+├── slides/       # Source Markdown files for lectures and labs
+├── pdf/          # Generated PDF slides
+├── html/         # Generated HTML slides
+├── index.qmd     # Quarto source for the course index page
+├── Makefile      # Build automation
+└── README.md     # This file
 ```
 
-**Create dark version (requires ghostscript):**
-```bash
-gs -o data-collection-labeling-dark.pdf -sDEVICE=pdfwrite \
-   -c "{1 exch sub}{1 exch sub}{1 exch sub}{1 exch sub} setcolortransfer" \
-   -f data-collection-labeling-light.pdf
-```
+## Contributing
 
-**Watch mode (auto-rebuild):**
-```bash
-typst watch data-collection-labeling.typ data-collection-labeling-light.pdf
-```
+**Teaching Assistants:**
+If you find an issue with the slides (typos, code errors, outdated content), please **open an issue** using the "Bug Report" template.
 
-## Editing Slides
-
-Edit the `.typ` file directly. Typst has clean syntax for slides.
-
-**Basic structure:**
-```typst
-#import "@preview/touying:0.5.5": *
-#import themes.metropolis: *
-#import "slides.typ": columns-layout, tip-box, warning-box, info-box, card
-
-#show: metropolis-theme.with(
-  aspect-ratio: "16-9",
-)
-
-#set text(size: 17pt)
-
-// Title slide
-#slide[
-  #align(center + horizon)[
-    #text(size: 36pt, weight: "bold")[Your Title]
-    #v(0.5em)
-    #text(size: 22pt)[Course Name]
-  ]
-]
-
-// Section divider
-#slide[
-  #align(center + horizon)[
-    #text(size: 40pt, weight: "bold", fill: rgb("#2563eb"))[Section Name]
-  ]
-]
-
-// Content slide
-#slide[
-= Slide Title
-
-Content here...
-]
-```
-
-**Features:**
-- `#slide[...]` - Wraps each slide
-- `#columns-layout(left, right)` - Two-column layout
-- `#card[...]` - Highlighted card
-- `#tip-box[...]`, `#info-box[...]`, `#warning-box[...]` - Callout boxes
-- Code blocks with syntax highlighting (just use triple backticks)
-
-## GitHub Actions (Automatic)
-
-GitHub Actions automatically builds and deploys on every push.
-
-**Workflow:**
-1. Edit `.typ` files
-2. Build PDFs locally: `make all` (optional, for local preview)
-3. Commit and push: `git add *.typ *.pdf && git commit && git push`
-4. GitHub Actions: Builds Quarto index page and deploys to GitHub Pages
-
-**What's committed:** Source files (`.typ`) and PDFs
-**What's generated by GitHub Actions:** `index.html` listing page
-
-## Why Typst?
-
-- **Fast**: Compiles instantly, great for iterative development
-- **Beautiful**: Modern, clean typography out of the box
-- **Simple**: Easy syntax, no LaTeX complexity
-- **Code-friendly**: Excellent syntax highlighting for code examples
-- **Portable**: Single PDF file, works everywhere
+1.  Go to the [Issues](https://github.com/nipunbatra/stt-ai-teaching/issues) tab.
+2.  Click "New Issue".
+3.  Select "Bug Report for Course Content".
 
 ## License
 

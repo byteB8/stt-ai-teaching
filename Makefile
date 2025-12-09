@@ -1,65 +1,53 @@
-.PHONY: all clean help list slides dark
+.PHONY: all clean help list dirs
 
-# Find all .md files for Marp (excluding README.md)
-MARP_SLIDES := $(filter-out README.md Readme.md, $(wildcard *.md))
-MARP_PDF := $(MARP_SLIDES:.md=-marp.pdf)
-MARP_PDF_DARK := $(MARP_SLIDES:.md=-marp-dark.pdf)
-MARP_HTML := $(MARP_SLIDES:.md=-marp.html)
+# Directories
+SLIDES_DIR := slides
+PDF_DIR := pdf
+HTML_DIR := html
 
-# Default target - build Marp slides
-all: slides
+# Find all .md files in slides/ directory
+SLIDES_MD := $(wildcard $(SLIDES_DIR)/*.md)
+
+# Define output files
+# Map slides/%.md -> pdf/%.pdf
+PDF_TARGETS := $(patsubst $(SLIDES_DIR)/%.md, $(PDF_DIR)/%.pdf, $(SLIDES_MD))
+# Map slides/%.md -> html/%.html
+HTML_TARGETS := $(patsubst $(SLIDES_DIR)/%.md, $(HTML_DIR)/%.html, $(SLIDES_MD))
+
+# Default target
+all: dirs $(PDF_TARGETS) $(HTML_TARGETS)
 	@echo "✓ All slides built successfully"
 
-# Build Marp slides (PDF and HTML)
-slides: $(MARP_PDF) $(MARP_HTML)
-	@echo "✓ Marp slides built (PDF and HTML)"
+# Create output directories
+dirs:
+	@mkdir -p $(PDF_DIR)
+	@mkdir -p $(HTML_DIR)
 
-# Build dark PDFs (inverted colors)
-dark: $(MARP_PDF) $(MARP_PDF_DARK)
-	@echo "✓ Dark theme PDFs created"
-
-# Pattern rule for Marp PDF
-%-marp.pdf: %.md
-	@echo "Building Marp PDF: $< -> $@"
+# Pattern rule for PDF
+$(PDF_DIR)/%.pdf: $(SLIDES_DIR)/%.md
+	@echo "Building PDF: $< -> $@"
 	@marp $< -o $@ --pdf --allow-local-files
 
-# Pattern rule for Marp HTML
-%-marp.html: %.md
-	@echo "Building Marp HTML: $< -> $@"
-	@marp $< -o $@ --html
-
-# Pattern rule for dark PDF (color inversion with ghostscript)
-%-marp-dark.pdf: %-marp.pdf
-	@echo "Creating dark version: $< -> $@"
-	@if command -v gs >/dev/null 2>&1; then \
-		gs -o $@ -sDEVICE=pdfwrite \
-		   -c "{1 exch sub}{1 exch sub}{1 exch sub}{1 exch sub} setcolortransfer" \
-		   -f $< 2>&1 | grep -v "GPL Ghostscript" | grep -v "Copyright" | grep -v "Processing pages" | grep -v "Page [0-9]" | grep -v "reserved for an Annotation" || true; \
-	else \
-		echo "Warning: ghostscript (gs) not found. Copying original."; \
-		cp $< $@; \
-	fi
+# Pattern rule for HTML
+$(HTML_DIR)/%.html: $(SLIDES_DIR)/%.md
+	@echo "Building HTML: $< -> $@"
+	@marp $< -o $@ --html --allow-local-files
 
 # List available slides
 list:
-	@echo "Available Marp slides:"
-	@for file in $(MARP_SLIDES); do \
-		echo "  - $${file%.md}"; \
+	@echo "Available slides:"
+	@for file in $(SLIDES_MD); do \
+		echo "  - $$file"; \
 	done
-	@echo ""
-	@echo "Build commands:"
-	@echo "  make slides    # Build slides (PDF and HTML) - default"
-	@echo "  make dark      # Build dark theme PDFs (inverted colors)"
 
 # Clean generated files
 clean:
 	@echo "Cleaning generated files..."
-	@rm -f $(MARP_PDF) $(MARP_PDF_DARK) $(MARP_HTML)
+	@rm -rf $(PDF_DIR) $(HTML_DIR)
 	@echo "✓ Clean complete"
 
 help:
 	@echo "Available targets:"
-	@echo "  make slides    # Build Marp slides (PDF and HTML) - default"
-	@echo "  make dark      # Build dark theme PDFs (inverted colors)"
-	@echo "  make list      # List available slides"
-	@echo "  make clean     # Remove all generated files"
+	@echo "  make all       # Build all slides (PDF and HTML) - default"
+	@echo "  make clean     # Remove generated pdf/ and html/ directories"
+	@echo "  make list      # List available source slides"
