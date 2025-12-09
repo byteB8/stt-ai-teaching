@@ -119,14 +119,12 @@ DevTools lets you:
 
 **Goal**: Find how the site loads weather data
 
-```
 1. Open https://weather.com (example)
 2. Open DevTools → Network tab
 3. Refresh page (Cmd+R)
 4. Look for XHR/Fetch requests
 5. Click on a request → Preview tab
 6. See JSON data!
-```
 
 **Key Filters**:
 - `XHR` - API calls made by JavaScript
@@ -140,9 +138,7 @@ DevTools lets you:
 
 ## Anatomy of an HTTP Request
 
-<div class="columns">
-
-### Request
+**Request**
 ```http
 GET /api/weather?city=Ahmedabad HTTP/1.1
 Host: api.weather.com
@@ -150,7 +146,7 @@ User-Agent: Mozilla/5.0...
 Accept: application/json
 ```
 
-### Response
+**Response**
 ```http
 HTTP/1.1 200 OK
 Content-Type: application/json
@@ -161,8 +157,6 @@ Content-Type: application/json
   "humidity": 65
 }
 ```
-
-</div>
 
 **Key Parts**: Method (GET/POST), URL, Headers, Body (for POST)
 
@@ -212,6 +206,7 @@ Instead of manually constructing requests, DevTools gives you working code with:
 
 ## Example: GitHub API
 
+**Shell**:
 ```bash
 # Copied from DevTools
 curl 'https://api.github.com/users/nipunbatra' \
@@ -220,7 +215,11 @@ curl 'https://api.github.com/users/nipunbatra' \
   --compressed
 ```
 
-**Convert to Python** (next section):
+---
+
+# Demo: Copy as Python
+
+**Python**:
 ```python
 import requests
 
@@ -340,8 +339,6 @@ response = requests.get(
 
 ## Two Ways to Add Parameters
 
-<div class="columns">
-
 ### Method 1: In URL
 ```python
 url = 'https://api.example.com/search?q=python&limit=10'
@@ -359,8 +356,6 @@ params = {
 response = requests.get(url, params=params)
 # Actual URL: /search?q=python&limit=10&sort=stars
 ```
-
-</div>
 
 **Recommended**: Use `params` dict—cleaner and handles encoding!
 
@@ -385,7 +380,13 @@ response = requests.get(url, params=params)
 from requests.auth import HTTPBasicAuth
 response = requests.get(url,
     auth=HTTPBasicAuth('username', 'password'))
+```
 
+---
+
+# Handling Authentication (Cookies)
+
+```python
 # 4. Session cookies (we'll use this later)
 session = requests.Session()
 session.post('/login', data={'user': 'me', 'pass': 'secret'})
@@ -654,7 +655,13 @@ def scrape_article(url):
         'content': soup.find('article').get_text(strip=True),
         'url': url
     }
+```
 
+---
+
+# Batch Scraping (cont.)
+
+```python
 # Scrape multiple articles
 article_urls = ['https://blog.com/post1', 'https://blog.com/post2']
 articles = []
