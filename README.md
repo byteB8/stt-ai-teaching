@@ -6,25 +6,27 @@
 
 This repository contains the lecture slides, lab exercises, and course materials for CS 203. The course covers the end-to-end software engineering stack required for modern AI development, from data collection to deployment and monitoring.
 
-## Course Syllabus (15 Weeks)
+## Course Syllabus (17 Weeks)
 
 | Week | Topic | Key Tools |
 | :--- | :--- | :--- |
 | 1 | Web Scraping & Data Collection | Chrome DevTools, Playwright, BeautifulSoup |
-| 2 | Data Validation & Labeling | Pydantic, jq, Label Studio |
-| 3 | LLM APIs & Multimodal AI | Gemini API, OpenAI API |
-| 4 | HTTP, APIs & FastAPI | curl, HTTP, FastAPI |
-| 5 | Git & GitHub Automation | GitHub API, PyGithub, GraphQL |
-| 6 | Active Learning | modAL, Uncertainty Sampling |
-| 7 | Data Augmentation | Albumentations, nlpaug |
+| 2 | Data Validation & Labeling | Pydantic, jq, pandas |
+| 3 | Data Labeling & Annotation | Label Studio, Cohen's Kappa |
+| 4 | Active Learning | modAL, Uncertainty Sampling |
+| 5 | Data Augmentation | Albumentations, nlpaug |
+| 6 | LLM APIs & Multimodal AI | Gemini API, OpenAI API |
+| 7 | Model Development & Training | Scikit-learn, AutoGluon, PyTorch |
 | 8 | Reproducibility & Environments | Docker, DVC, MLflow |
-| 9 | Testing & CI/CD | pytest, GitHub Actions |
-| 10 | Model Deployment | ONNX, Docker, Serving |
-| 11 | Interactive AI Demos | Streamlit, Gradio |
-| 12 | RAG & Vector Databases | ChromaDB, Embeddings, LangChain |
-| 13 | Cloud Orchestration | Docker Compose, AWS/Render |
-| 14 | Model Monitoring | Evidently AI, Data Drift |
-| 15 | LLM Agents | LangGraph, Tool Use |
+| 9 | Interactive AI Demos | Streamlit, Gradio, Hugging Face |
+| 10 | HTTP, APIs & FastAPI | FastAPI, curl, HTTP |
+| 11 | Git & GitHub Automation | GitHub API, PyGithub, GraphQL |
+| 12 | Testing & CI/CD | pytest, GitHub Actions |
+| 13 | Model Deployment | ONNX, Docker, Serving |
+| 14 | RAG & Vector Databases | ChromaDB, Embeddings, LangChain |
+| 15 | Cloud Foundations & Orchestration | Docker Compose, AWS/Render |
+| 16 | Model Monitoring & Observability | Evidently AI, Data Drift |
+| 17 | LLM Agents & Tool Use | LangGraph, Tool Use |
 
 ## Building the Slides
 
