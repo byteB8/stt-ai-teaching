@@ -98,18 +98,17 @@ title: "CS 203: Software Tools and Techniques for AI"
 
 ---
 
-## Week 7: Data Augmentation
+## Week 7: Model Development & Training
 
-**Topics**: Image, text, and audio augmentation techniques
+**Topics**: Model selection, training pipelines, transfer learning, AutoML, LLM Fine-tuning
 
 ### Lecture (1.5 hours)
-- [PDF](pdf/data-augmentation-lecture.pdf) | [HTML](html/data-augmentation-lecture.html) | [Source](https://github.com/nipunbatra/stt-ai-teaching/blob/master/slides/data-augmentation-lecture.md)
-- Content: Augmentation fundamentals, Albumentations, nlpaug, audiomentations, AutoAugment, test-time augmentation
+- [PDF](pdf/week07-model-development-lecture.pdf) | [HTML](html/week07-model-development-lecture.html) | [Source](https://github.com/nipunbatra/stt-ai-teaching/blob/master/slides/week07-model-development-lecture.md)
+- Content: Baseline models, bias-variance tradeoff, cross-validation, hyperparameter tuning (Optuna), AutoML (AutoGluon), transfer learning, PEFT/LoRA.
 
 ### Lab (3 hours)
-- [PDF](pdf/data-augmentation-lab.pdf) | [HTML](html/data-augmentation-lab.html) | [Source](https://github.com/nipunbatra/stt-ai-teaching/blob/master/slides/data-augmentation-lab.md)
-- Exercises: Image transforms, text paraphrasing, audio manipulation
-- Project: Compare augmentation strategies, measure performance impact
+- [PDF](pdf/week07-model-development-lab.pdf) | [HTML](html/week07-model-development-lab.html) | [Source](https://github.com/nipunbatra/stt-ai-teaching/blob/master/slides/week07-model-development-lab.md)
+- Exercises: Training Scikit-learn pipelines, using AutoGluon for tabular data, fine-tuning ResNet with PyTorch, tracking experiments, LLM fine-tuning.
 
 ---
 

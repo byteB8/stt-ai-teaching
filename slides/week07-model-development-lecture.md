@@ -23,6 +23,7 @@ Prof. Nipun Batra, IIT Gandhinagar
 - AutoML with AutoGluon
 - Model checkpointing
 - Transfer learning
+- **Fine-tuning LLMs** (New!)
 - Training pipelines
 
 ---
@@ -59,7 +60,7 @@ graph LR
 | :--- | :--- | :--- |
 | **Tabular** | Logistic Regression, Decision Tree | XGBoost, LightGBM, TabNet |
 | **Image** | ResNet-18 | EfficientNet, ViT (Vision Transformer) |
-| **Text** | TF-IDF + Naive Bayes | BERT, RoBERTa, GPT |
+| **Text** | TF-IDF + Naive Bayes | BERT, RoBERTa, GPT (Fine-tuned) |
 | **Time Series** | ARIMA, Linear Regression | LSTM, Transformer |
 
 **Why Baselines?**
@@ -258,6 +259,47 @@ graph TD
 
 ---
 
+# Fine-Tuning LLMs (PEFT & LoRA)
+
+**The Problem**: Fine-tuning a 7B parameter model requires ~100GB+ VRAM.
+**Solution**: Parameter-Efficient Fine-Tuning (PEFT).
+
+**LoRA (Low-Rank Adaptation)**:
+- Freeze original weights $W$.
+- Add small trainable rank decomposition matrices $A$ and $B$.
+- $W' = W + BA$
+- Trainable parameters reduced by 10,000x!
+
+**Use Cases**:
+- Adapting generic LLM to specific domain (Medical, Legal).
+- Changing style/tone (Chatbot persona).
+
+---
+
+# Hugging Face PEFT Example
+
+```python
+from peft import LoraConfig, get_peft_model, TaskType
+
+# 1. Define LoRA Config
+peft_config = LoraConfig(
+    task_type=TaskType.SEQ_CLS, 
+    inference_mode=False, 
+    r=8,            # Rank
+    lora_alpha=32,  # Scaling factor
+    lora_dropout=0.1
+)
+
+# 2. Wrap Base Model
+model = AutoModelForSequenceClassification.from_pretrained("bert-base-uncased")
+model = get_peft_model(model, peft_config)
+
+# 3. Train as usual (only 0.5% params are trainable!)
+model.print_trainable_parameters()
+```
+
+---
+
 # Experiment Tracking
 
 **Problem**: "I trained 50 models. Which one had `lr=0.001` and `dropout=0.5`?"
@@ -289,5 +331,6 @@ graph TD
 2.  **Automated**: Use AutoGluon to beat your manual models.
 3.  **Optimization**: Use Optuna to tune the Random Forest.
 4.  **Tracking**: Log everything to W&B.
+5.  **(Advanced)**: Fine-tune a small BERT model using LoRA.
 
 Let's code!

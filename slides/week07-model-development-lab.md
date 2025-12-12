@@ -23,6 +23,7 @@ Prof. Nipun Batra, IIT Gandhinagar
 4. Build training pipelines
 5. Implement transfer learning
 6. Track experiments with Weights & Biases
+7. **(Bonus) Fine-tune an LLM with PEFT**
 
 ---
 
@@ -32,7 +33,7 @@ Prof. Nipun Batra, IIT Gandhinagar
 pip install scikit-learn pandas numpy
 pip install optuna autogluon
 pip install torch torchvision
-pip install transformers datasets
+pip install transformers datasets peft accelerate
 pip install wandb pytorch-lightning
 ```
 
@@ -793,60 +794,18 @@ wandb.agent(sweep_id, train_sweep, count=50)
 
 ---
 
-# Challenge 1: Model Comparison Pipeline
+# Challenge: Fine-tuning LLM with PEFT (Advanced)
 
-**Task**: Create a reusable pipeline to compare multiple models
-
-**Requirements**:
-1. Load data
-2. Preprocess (scaling, encoding)
-3. Train multiple models
-4. Cross-validate
-5. Compare performance
-6. Save best model
-
-**Bonus**: Log to W&B
-
----
-
-# Challenge 2: AutoML vs Manual Tuning
-
-**Task**: Compare AutoGluon with manual hyperparameter tuning
+**Task**: Fine-tune a tiny BERT model for sentiment analysis using LoRA.
 
 **Steps**:
-1. Use AutoGluon with medium_quality preset
-2. Manually tune best AutoGluon model with Optuna
-3. Compare performance and time
-4. Which approach is better?
+1. Load dataset (e.g., `imdb` or `rotten_tomatoes`).
+2. Load pre-trained model (`distilbert-base-uncased`).
+3. Configure LoRA (`LoraConfig`).
+4. Wrap model (`get_peft_model`).
+5. Train for 1 epoch using `Trainer`.
 
----
-
-# Challenge 3: Transfer Learning on Custom Data
-
-**Task**: Fine-tune pre-trained model on your own image dataset
-
-**Steps**:
-1. Collect or download custom image dataset
-2. Load pre-trained model (ResNet, EfficientNet)
-3. Add custom classification head
-4. Train with proper validation
-5. Track experiments with W&B
-6. Compare transfer learning vs training from scratch
-
----
-
-# Best Practices Checklist
-
-- [ ] Use proper train/val/test splits
-- [ ] Set random seeds for reproducibility
-- [ ] Monitor both train and val metrics
-- [ ] Save best model based on validation
-- [ ] Track experiments (W&B, MLflow)
-- [ ] Version models and data
-- [ ] Use cross-validation for small datasets
-- [ ] Consider AutoML for baseline
-- [ ] Transfer learning for images/text
-- [ ] Document hyperparameters
+**Hint**: Use `peft` and `transformers` libraries.
 
 ---
 
@@ -888,6 +847,7 @@ wandb.agent(sweep_id, train_sweep, count=50)
 - AutoGluon: auto.gluon.ai
 - PyTorch: pytorch.org
 - Weights & Biases: docs.wandb.ai
+- Hugging Face PEFT: huggingface.co/docs/peft
 
 **Tutorials**:
 - AutoGluon Quick Start: auto.gluon.ai/tutorials
