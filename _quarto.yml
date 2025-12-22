@@ -3,6 +3,7 @@ project:
   output-dir: .
   render:
     - "*.qmd"
+    - "labs/*.ipynb"
     - "!slides/"
 
 website:

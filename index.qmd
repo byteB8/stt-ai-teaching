@@ -39,7 +39,7 @@ Throughout the course, you'll build a complete ML system to predict movie succes
 
 | Week | Topic | Materials |
 |:----:|-------|:---------:|
-| 1 | [Data Collection](#week-1-data-collection) | [Lecture](pdf/week01-data-collection-lecture.pdf) ∙ [Lab](pdf/week01-data-collection-lab.pdf) |
+| 1 | [Data Collection](#week-1-data-collection) | [Lecture](pdf/week01-data-collection-lecture.pdf) ∙ [Lab](labs/week01-data-collection-lab.html) |
 | 2 | [Data Validation](#week-2-data-validation--quality) | [Lecture](pdf/week02-data-validation-lecture.pdf) ∙ [Lab](pdf/week02-data-validation-lab.pdf) |
 | 3 | [Data Labeling](#week-3-data-labeling--annotation) | [Lecture](pdf/week03-data-labeling-lecture.pdf) ∙ [Lab](pdf/week03-data-labeling-lab.pdf) |
 | 4 | [Optimizing Labeling](#week-4-optimizing-labeling) | [Lecture](pdf/week04-optimizing-labeling-lecture.pdf) ∙ [Lab](pdf/week04-active-learning-lab.pdf) |
@@ -79,10 +79,10 @@ Build robust data collection pipelines using HTTP APIs and web scraping.
 
 **Key Tools:** Chrome DevTools, curl, requests, BeautifulSoup, Playwright
 
-| | PDF | HTML | Source |
-|--|:--:|:--:|:--:|
-| **Lecture** | [Download](pdf/week01-data-collection-lecture.pdf) | [View](html/week01-data-collection-lecture.html) | [GitHub](https://github.com/nipunbatra/stt-ai-teaching/blob/master/slides/week01-data-collection-lecture.md) |
-| **Lab** | [Download](pdf/week01-data-collection-lab.pdf) | [View](html/week01-data-collection-lab.html) | [GitHub](https://github.com/nipunbatra/stt-ai-teaching/blob/master/slides/week01-data-collection-lab.md) |
+| | Materials |
+|--|:--|
+| **Lecture** | [PDF](pdf/week01-data-collection-lecture.pdf) ∙ [HTML](html/week01-data-collection-lecture.html) ∙ [Source](https://github.com/nipunbatra/stt-ai-teaching/blob/master/slides/week01-data-collection-lecture.md) |
+| **Lab (Notebook)** | [View](labs/week01-data-collection-lab.html) ∙ [Download .ipynb](https://github.com/nipunbatra/stt-ai-teaching/raw/master/labs/week01-data-collection-lab.ipynb) |
 
 **Topics Covered:**
 
