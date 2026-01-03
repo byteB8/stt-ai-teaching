@@ -236,11 +236,7 @@ When APIs don't exist or don't have what you need:
 
 # API: A Restaurant Analogy
 
-```
-You (Client)  ──order──▶  Waiter (API)  ──request──▶  Kitchen (Server)
-                                                            │
-You (Client)  ◀──food───  Waiter (API)  ◀──response──       │
-```
+![width:700px](../diagrams/figures/restaurant.png)
 
 | Restaurant | API |
 |------------|-----|
@@ -477,13 +473,7 @@ Request 2: "Now show me Avatar." → "Who are you?"
 
 # The Client-Server Model
 
-![width:500px](../figures/http_request_sequence.png)
-
-1. Client initiates connection
-2. Client sends request
-3. Server processes request
-4. Server sends response
-5. Connection closes (or stays alive)
+![width:250px](../figures/http_request_sequence.png)
 
 ---
 
@@ -874,18 +864,11 @@ if data["budget"]:        # This is False!
 title,year,genre,director,rating
 Inception,2010,Sci-Fi,Christopher Nolan,8.8
 Avatar,2009,Action,James Cameron,7.9
-The Matrix,1999,Sci-Fi,Wachowskis,8.7
 ```
 
-**Pros**:
-- Opens in Excel/Google Sheets
-- Easy to load into pandas: `pd.read_csv("movies.csv")`
-- Very compact
+**Pros**: Opens in Excel, easy pandas loading, very compact
 
-**Cons**:
-- Flat structure only (no nesting)
-- No data types (everything is text)
-- Escaping issues with commas in data
+**Cons**: Flat structure only, no data types, escaping issues
 
 ---
 
