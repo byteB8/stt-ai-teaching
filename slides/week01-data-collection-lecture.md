@@ -196,7 +196,6 @@ When APIs don't exist or don't have what you need:
 
 </div>
 
-```
 1. Does a ready-made dataset exist?
    → YES: Download it (Kaggle, HuggingFace)
    → NO: Continue to step 2...
@@ -204,13 +203,11 @@ When APIs don't exist or don't have what you need:
 2. Does an official API exist?
    → YES: Is it free/affordable? → Use the API
    → NO: Continue to step 3...
-```
 
 ---
 
 # Decision Tree (continued)
 
-```
 3. Can you scrape the website?
    → Check robots.txt and ToS first
    → YES: Scrape ethically
@@ -220,7 +217,6 @@ When APIs don't exist or don't have what you need:
    → Manual data collection
    → Partner with data owner
    → Reframe the problem
-```
 
 **Most real projects use a combination of all methods!**
 
@@ -236,11 +232,7 @@ When APIs don't exist or don't have what you need:
 
 # API: A Restaurant Analogy
 
-```
-You (Client)  ──order──▶  Waiter (API)  ──request──▶  Kitchen (Server)
-                                                            │
-You (Client)  ◀──food───  Waiter (API)  ◀──response──       │
-```
+![width:700px](../diagrams/figures/restaurant.png)
 
 | Restaurant | API |
 |------------|-----|
@@ -477,13 +469,7 @@ Request 2: "Now show me Avatar." → "Who are you?"
 
 # The Client-Server Model
 
-![width:500px](../figures/http_request_sequence.png)
-
-1. Client initiates connection
-2. Client sends request
-3. Server processes request
-4. Server sends response
-5. Connection closes (or stays alive)
+![width:250px](../figures/server_diagram.svg)
 
 ---
 
@@ -1076,10 +1062,8 @@ Every row = one HTTP request/response
 3. Paste into terminal
 
 ```bash
-curl 'https://api.example.com/movies?id=123' \
-  -H 'accept: application/json' \
-  -H 'authorization: Bearer eyJhbGciOiJIUzI1...' \
-  -H 'user-agent: Mozilla/5.0 (Macintosh...)' \
+curl "https://www.omdbapi.com/?i=tt3896198&apikey=API_KEY" \
+  -H "accept: application/json" \
   --compressed
 ```
 
